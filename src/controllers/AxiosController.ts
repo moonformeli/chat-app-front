@@ -2,11 +2,13 @@ import autobind from 'autobind-decorator';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import HttpStatusCodes from 'http-status-codes';
 
+import {
+  IAxiosResponse
+} from '../models/axios/interfaces/IAxios';
 import EitherEntity from '../services/Either';
 
 export default class AxiosController {
-  private either = new EitherEntity();
-
+  @autobind
   private isClientError(res: AxiosResponse) {
     const { status } = res;
 
@@ -17,19 +19,21 @@ export default class AxiosController {
   }
 
   @autobind
-  protected async get<T>(url: string, config: AxiosRequestConfig = {}) {
+  protected async get<T = any>(url: string, config: AxiosRequestConfig = {}) {
     const res = await axios.get<T>(url, config);
 
     if (this.isClientError(res)) {
-      return this.either.fail({
+      return EitherEntity.fail<null>({
         data: null,
+        isError: true,
         status: res.status,
         statusText: res.statusText
       });
     }
 
-    return this.either.success({
+    return EitherEntity.success<T>({
       data: res.data,
+      isError: false,
       status: res.status,
       statusText: res.statusText
     });

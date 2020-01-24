@@ -1,7 +1,8 @@
-import { AxiosRequestConfig } from 'axios';
-import BaseController from '../BaseController';
-import UserQueryBuilder from '../../models/user/UserQueryBuilder';
 import autobind from 'autobind-decorator';
+import { AxiosRequestConfig } from 'axios';
+
+import UserQueryBuilder from '../../models/user/UserQueryBuilder';
+import BaseController from '../BaseController';
 
 export default class UserController extends BaseController {
   constructor(private builder: UserQueryBuilder) {
@@ -9,13 +10,13 @@ export default class UserController extends BaseController {
   }
 
   @autobind
-  async getAllChats() {
+  async getAllChats<T = any>() {
     const url = this.builder.getPath();
     const config: AxiosRequestConfig = {
       url,
       method: 'get'
     };
 
-    return await this.send(config);
+    return await this.send<T>(config);
   }
 }

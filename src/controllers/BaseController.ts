@@ -1,7 +1,7 @@
 import autobind from 'autobind-decorator';
 import { AxiosRequestConfig } from 'axios';
-
 import AxiosController from './AxiosController';
+
 
 export default class BaseController extends AxiosController {
   constructor() {
@@ -9,11 +9,12 @@ export default class BaseController extends AxiosController {
   }
 
   @autobind
-  protected async send<T>(config: AxiosRequestConfig) {
+  protected async send<T = any>(config: AxiosRequestConfig) {
     const { url = '' } = config;
 
     if (config.method?.toUpperCase() === 'GET') {
       return await this.get<T>(url, config);
     }
+    return Promise.reject();
   }
 }

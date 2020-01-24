@@ -1,17 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import styles from './App.scss';
 import Navigation from './components/Navigation/Navigation';
 import UserController from './controllers/user/UserController';
+import { IUser } from './models/user/interfaces/IUser';
 import UserQueryBuilder from './models/user/UserQueryBuilder';
 
 const App: React.FC = () => {
+  const [chats, setChats] = useState<IUser[]>([]);
   const userBuilder = new UserQueryBuilder('/list');
   const userController = new UserController(userBuilder);
 
   const getChats = async () => {
-    const data = await userController.getAllChats();
+    const data = await userController.getAllChats<IUser[]>();
+
     console.dir(data);
+
+    const f = data.caseOf({
+      left: () => {},
+      right: d => d
+    });
+
+    console.dir(f);
   };
 
   useEffect(() => {

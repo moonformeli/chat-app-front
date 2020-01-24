@@ -1,16 +1,37 @@
-import { Either, left, right, Left, Right } from 'fp-ts/lib/Either';
+import autobind from 'autobind-decorator';
 
-interface IEitherEntity<L = any, R = any> {
-  fail: (l: L) => Either<L, never>;
-  success: (r: R) => Either<never, R>;
-}
+import { IAxiosResponse } from '../models/axios/interfaces/IAxios';
 
-export default class EitherEntity implements IEitherEntity {
-  fail<L>(l: L) {
-    return left(l);
+export default class EitherEntity<T> {
+  private v: IAxiosResponse<T>;
+  constructor(v: IAxiosResponse<T>) {
+    this.v = v;
   }
 
-  success<R>(r: R) {
-    return right(r);
+  @autobind
+  map<T = any>(fn: (args?: any) => IAxiosResponse<T>) {
+    return new EitherEntity(fn(this.v));
+  }
+
+  @autobind
+  caseOf<L = any, R = any>({
+    left,
+    right
+  }: {
+    left: (l?: any) => L;
+    right: (r?: any) => R;
+  }) {
+    if (this.v.isError) {
+      return left();
+    }
+    return right(this.v);
+  }
+
+  static fail<L = any>(l: IAxiosResponse<L>): EitherEntity<L> {
+    return new EitherEntity<L>(l);
+  }
+
+  static success<R = any>(r: IAxiosResponse<R>): EitherEntity<R> {
+    return new EitherEntity<R>(r);
   }
 }

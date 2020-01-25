@@ -4,4 +4,5 @@ export default abstract class BaseQueryBuilder {
   protected port: number = 8999;
 
   abstract getPath(): string;
+  abstract getPort(): number;
 }

@@ -1,9 +1,15 @@
-import BaseQueryBuilder from '../BaseQueryBuilder';
 import autobind from 'autobind-decorator';
 
+import BaseQueryBuilder from '../BaseQueryBuilder';
+
 export default class UserQueryBuilder extends BaseQueryBuilder {
-  constructor(private path: string = '') {
+  constructor(private path: string = '', private prefix: string = '/api') {
     super();
+  }
+
+  @autobind
+  getPort(): number {
+    return this.port;
   }
 
   @autobind

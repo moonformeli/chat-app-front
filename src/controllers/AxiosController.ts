@@ -2,7 +2,6 @@ import autobind from 'autobind-decorator';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import HttpStatusCodes from 'http-status-codes';
 
-import { IAxiosResponse } from '../models/axios/interfaces/IAxios';
 import EitherEntity from '../services/Either';
 
 export default class AxiosController {

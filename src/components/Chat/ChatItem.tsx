@@ -17,7 +17,7 @@ const ChatItem: React.FC<IChatItemProps> = ({ chat }) => {
 
   return (
     <li className={styles.container}>
-      <Link to="/room" className={styles.link}>
+      <Link to={`/room/${chat.id}`} className={styles.link}>
         <div className={styles.profile}>
           <i style={{ backgroundImage: `url(${chat.profile})` }} />
         </div>

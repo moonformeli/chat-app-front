@@ -12,16 +12,17 @@ const App: React.FC = () => {
   const userController = new UserController(userBuilder);
 
   const getChats = async () => {
-    const data = await userController.getAllChats<IUser[]>();
+    const res = await userController.getAllChats<IUser[]>();
 
-    console.dir(data);
+    console.dir(res);
 
-    const f = data.caseOf({
+    const userChats = res.caseOf<void, IUser[]>({
       left: () => {},
       right: d => d
     });
 
-    console.dir(f);
+    // if (userChats.)
+    console.dir(userChats);
   };
 
   useEffect(() => {

@@ -2,6 +2,13 @@ import autobind from 'autobind-decorator';
 
 import { IAxiosResponse } from '../models/axios/interfaces/IAxios';
 
+type TLeft<L> = (l?: any) => L;
+type TRight<R> = (r?: any) => IAxiosResponse<R>;
+interface IEitherProps<L, R> {
+  left: TLeft<L>;
+  right: TRight<R>;
+}
+
 export default class EitherEntity<T> {
   private v: IAxiosResponse<T>;
   constructor(v: IAxiosResponse<T>) {
@@ -17,13 +24,20 @@ export default class EitherEntity<T> {
   caseOf<L = any, R = any>({
     left,
     right
-  }: {
-    left: (l?: any) => L;
-    right: (r?: any) => R;
-  }) {
+  }: IEitherProps<L, R>): L | IAxiosResponse<R> {
     if (this.v.isError) {
       return left();
     }
+    return right(this.v);
+  }
+
+  @autobind
+  doLeft<L>({ left }: { left: TLeft<L> }): L {
+    return left();
+  }
+
+  @autobind
+  doRight<R>({ right }: { right: TRight<R> }): IAxiosResponse<R> {
     return right(this.v);
   }
 

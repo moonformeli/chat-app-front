@@ -4,10 +4,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .title {
   color: #ffffff;
   font-size: 1.4rem;
   font-weight: bold;
+}
+
+.back {
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  left: 1rem;
+  cursor: pointer;
 }

@@ -50,7 +50,11 @@ const Room: React.FC<IRoomProps> = ({ match }) => {
 
   return (
     <>
-      <Navigation title={detail.username} />
+      <Navigation
+        title={detail.username}
+        renderLeft={true}
+        onClickLeft={() => (location.href = '/list')}
+      />
       <RoomBody messages={detail.messages} />
     </>
   );

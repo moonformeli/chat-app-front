@@ -5,7 +5,7 @@ export interface IUser {
   messages: IMessage[];
 }
 
-interface IMessage {
+export interface IMessage {
   isMe: boolean;
   message: string;
   createdAt: string;

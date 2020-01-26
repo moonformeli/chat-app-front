@@ -1,6 +1,6 @@
-import classnames from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { classes } from 'typestyle';
 
 import { IUser } from '../../models/user/interfaces/IUser';
 import { format } from '../../utils';
@@ -30,7 +30,7 @@ const ChatItem: React.FC<IChatItemProps> = ({ chat }) => {
             {format(mostRecentMessage.createdAt)}
           </span>
           <span
-            className={classnames(
+            className={classes(
               styles.unRead,
               unReadMessages === 0 && styles.hidden
             )}

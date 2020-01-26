@@ -18,7 +18,7 @@ const Chat: React.FC = () => {
       right: d => d
     });
 
-    if (!userChats) {
+    if (!userChats || userChats.isError) {
       return;
     }
 

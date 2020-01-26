@@ -1,0 +1,11 @@
+.container {
+  min-height: calc(100% - 5rem);
+  background: #f9f9fb;
+  padding: 0 1rem;
+  overflow-y: scroll;
+  position: relative;
+
+  p:first-child {
+    margin-top: 0;
+  }
+}

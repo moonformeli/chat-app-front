@@ -11,3 +11,5 @@ declare module '*.css' {
   const content: CSSModule;
   export default content;
 }
+
+declare module '*.png';

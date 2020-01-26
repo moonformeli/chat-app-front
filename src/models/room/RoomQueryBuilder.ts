@@ -2,7 +2,7 @@ import autobind from 'autobind-decorator';
 
 import BaseQueryBuilder from '../BaseQueryBuilder';
 
-export default class UserQueryBuilder extends BaseQueryBuilder {
+export default class RoomQueryBuilder extends BaseQueryBuilder {
   constructor(private path: string = '') {
     super();
   }

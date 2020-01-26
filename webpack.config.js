@@ -13,8 +13,8 @@ module.exports = {
   devtool: 'source-map',
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
-    port: 8888,
-    historyApiFallback: true
+    historyApiFallback: true,
+    port: 8888
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.scss', '.js']
@@ -49,6 +49,9 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: true,
+              // modules: {
+              //   localIdentName: '[local]'
+              // },
               sourceMap: true
             }
           },
@@ -60,6 +63,17 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: {
+          loader: 'url-loader',
+          options: {
+            name: '[name].[ext]?[hash]',
+            publicPath: './dist',
+            limit: 10000 // 10kb
+          }
+        }
       },
       {
         test: /\.html$/,

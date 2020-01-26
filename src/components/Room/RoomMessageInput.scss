@@ -1,0 +1,42 @@
+$fontFamily: 'Gamja Flower', 'Nanum Gothic', sans-serif;
+
+.container {
+  width: calc(100% - 2rem);
+  height: 5rem;
+  position: absolute;
+  bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 72%;
+  border: none;
+  border-radius: 1.3em;
+  box-shadow: 0.04rem 0.04rem 0.4rem rgba(0, 0, 0, 0.2);
+  padding: 0.9rem 1rem;
+  color: #a4a6b0;
+  font-family: $fontFamily;
+  font-size: 1.1rem;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.imgContainer {
+  width: 4rem;
+  height: 4rem;
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #5b36ac;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.img {
+  width: 2rem;
+  height: 2rem;
+}

@@ -3,6 +3,7 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import styles from './App.scss';
 import Chat from './pages/chat/Chat';
+import Room from './pages/room/Room';
 
 const App: React.FC = () => {
   // useEffect(() => {
@@ -20,9 +21,8 @@ const App: React.FC = () => {
   return (
     <section className={styles.container}>
       <Switch>
-        <Route exact={true} path="/list">
-          <Chat />
-        </Route>
+        <Route exact={true} path="/list" component={Chat} />
+        <Route path="/room/:id" component={Room} />
       </Switch>
     </section>
   );

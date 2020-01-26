@@ -1,0 +1,6 @@
+- webpack
+- react
+- typescript
+- mobx
+- sass
+- monad / either

@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { classes } from 'typestyle';
@@ -43,4 +44,4 @@ const ChatItem: React.FC<IChatItemProps> = ({ chat }) => {
   );
 };
 
-export default ChatItem;
+export default observer(ChatItem);

@@ -26,7 +26,8 @@ module.exports = {
     // }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'public', 'index.html')
+      template: path.resolve(__dirname, 'public', 'index.html'),
+      inject: false
     })
   ],
   module: {

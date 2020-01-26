@@ -1,17 +1,17 @@
-import React from 'react';
+import { observer } from 'mobx-react-lite';
+import React, { useContext } from 'react';
 
-import { IUser } from '../../models/user/interfaces/IUser';
+import ChatStore, { ChatStoreCtx } from '../../stores/chat/ChatStore';
 import ChatItem from './ChatItem';
 
-interface IChatBodyProps {
-  chats: IUser[];
-}
+const ChatBody: React.FC = () => {
+  const store = useContext(ChatStoreCtx) as ChatStore;
+  const { chatList } = store;
 
-const ChatBody: React.FC<IChatBodyProps> = ({ chats }) => {
   return (
     <div>
       <ul>
-        {chats.map((chat, i) => (
+        {chatList.map((chat, i) => (
           <ChatItem chat={chat} key={i} />
         ))}
       </ul>
@@ -19,4 +19,4 @@ const ChatBody: React.FC<IChatBodyProps> = ({ chats }) => {
   );
 };
 
-export default ChatBody;
+export default observer(ChatBody);

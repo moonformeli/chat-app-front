@@ -1,9 +1,13 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import styles from './App.scss';
+import WebSocketController from './controllers/WebSocketController';
 import Chat from './pages/chat/Chat';
 import Room from './pages/room/Room';
+
+const socketController = new WebSocketController('ws://localhost:8999/');
 
 const App: React.FC = () => {
   // useEffect(() => {
@@ -28,4 +32,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default observer(App);

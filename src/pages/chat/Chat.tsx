@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import React, { useEffect, useRef } from 'react';
 
 import ChatBody from '../../components/Chat/ChatBody';
 import Navigation from '../../components/Navigation/Navigation';
 import UserController from '../../controllers/user/UserController';
 import { IUser } from '../../models/user/interfaces/IUser';
 import UserQueryBuilder from '../../models/user/UserQueryBuilder';
+import ChatStore, { ChatStoreCtx } from '../../stores/chat/ChatStore';
 
 const Chat: React.FC = () => {
-  const [chats, setChats] = useState<IUser[]>([]);
+  const chatStore = useRef(new ChatStore()).current;
   const userBuilder = new UserQueryBuilder('/list');
   const userController = new UserController(userBuilder);
 
@@ -18,22 +20,23 @@ const Chat: React.FC = () => {
       right: d => d
     });
 
-    if (!userChats || userChats.isError) {
+    if (!userChats || userChats.isError || !userChats.data) {
       return;
     }
 
-    setChats(userChats.data || []);
+    chatStore.chatList = userChats.data;
   };
 
   useEffect(() => {
     getChats();
   }, []);
+
   return (
-    <>
+    <ChatStoreCtx.Provider value={chatStore}>
       <Navigation title={'채팅'} />
-      <ChatBody chats={chats} />
-    </>
+      <ChatBody />
+    </ChatStoreCtx.Provider>
   );
 };
 
-export default Chat;
+export default observer(Chat);

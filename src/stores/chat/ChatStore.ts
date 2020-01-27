@@ -8,4 +8,4 @@ export default class ChatStore {
   chatList: IUser[] = [];
 }
 
-export const ChatStoreCtx = createContext<ChatStore | null>(null);
+export const ChatStoreCtx = createContext<ChatStore>(null!);

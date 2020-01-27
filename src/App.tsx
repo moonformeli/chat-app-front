@@ -1,33 +1,29 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import React, { useRef } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
 import styles from './App.scss';
-import WebSocketController from './controllers/WebSocketController';
 import Chat from './pages/chat/Chat';
 import Room from './pages/room/Room';
-
-const socketController = new WebSocketController('ws://localhost:8999/');
+import ChatStore, { ChatStoreCtx } from './stores/chat/ChatStore';
+import WebSocketStore, {
+  WebSocketStoreCtx
+} from './stores/socket/WebSocketStore';
 
 const App: React.FC = () => {
-  // useEffect(() => {
-  //   const ws = new WebSocket('ws://localhost:8999/');
-
-  //   ws.onopen = () => {
-  //     console.log('ws open');
-  //   };
-
-  //   ws.onmessage = d => {
-  //     console.dir(d);
-  //   };
-  // }, []);
+  const chatStore = useRef<ChatStore>(new ChatStore()).current;
+  const socketStore = useRef<WebSocketStore>(new WebSocketStore()).current;
 
   return (
     <section className={styles.container}>
-      <Switch>
-        <Route exact={true} path="/list" component={Chat} />
-        <Route path="/room/:id" component={Room} />
-      </Switch>
+      <ChatStoreCtx.Provider value={chatStore}>
+        <WebSocketStoreCtx.Provider value={socketStore}>
+          <Switch>
+            <Route exact={true} path="/list" component={Chat} />
+            <Route path="/room/:id" component={Room} />
+          </Switch>
+        </WebSocketStoreCtx.Provider>
+      </ChatStoreCtx.Provider>
     </section>
   );
 };

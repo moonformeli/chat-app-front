@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import Navigation from '../../components/Navigation/Navigation';
 import RoomBody from '../../components/Room/RoomBody';
 import RoomController from '../../controllers/room/RoomController';
 import { IRoom } from '../../models/room/interfaces/IRoom';
 import RoomQueryBuilder from '../../models/room/RoomQueryBuilder';
+import ChatStore, { ChatStoreCtx } from '../../stores/chat/ChatStore';
 
 interface IRoomMatch {
   path: string;
@@ -17,6 +19,7 @@ interface IRoomMatch {
 
 interface IRoomProps {
   match: IRoomMatch;
+  elRef: React.RefObject<HTMLSelectElement> | null;
 }
 
 const Room: React.FC<IRoomProps> = ({ match }) => {
@@ -25,11 +28,14 @@ const Room: React.FC<IRoomProps> = ({ match }) => {
     messages: [],
     username: ''
   });
+  const chatStore = useRef(useContext<ChatStore>(ChatStoreCtx)).current;
+  const user = chatStore.chatList.find(chat => chat.id === match?.params?.id)!;
+
   const controller = new RoomController(new RoomQueryBuilder('/room'));
 
   const getRoomDetail = async () => {
     const res = await controller.getRoomDetail<IRoom>({
-      id: match.params.id || ''
+      id: match?.params.id || ''
     });
 
     const detail = res.caseOf<void, IRoom>({
@@ -48,6 +54,10 @@ const Room: React.FC<IRoomProps> = ({ match }) => {
     getRoomDetail();
   }, []);
 
+  useEffect(() => {
+    setDetail(user);
+  }, [user.messages.length]);
+
   return (
     <>
       <Navigation
@@ -59,4 +69,4 @@ const Room: React.FC<IRoomProps> = ({ match }) => {
     </>
   );
 };
-export default Room;
+export default observer(Room);

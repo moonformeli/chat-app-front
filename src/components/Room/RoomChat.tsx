@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { classes } from 'typestyle';
 
@@ -16,4 +17,4 @@ const RoomChat: React.FC<IRoomChatProps> = ({ isMe, message, messageType }) => {
   );
 };
 
-export default RoomChat;
+export default observer(RoomChat);

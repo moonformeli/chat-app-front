@@ -24,7 +24,7 @@ const Navigation: React.FC<INavigationProps> = ({
           onClick={onClickLeft}
         />
       )}
-      <span className={styles.title}>{title}</span>
+      <strong className={styles.title}>{title}</strong>
     </div>
   );
 };

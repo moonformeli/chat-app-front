@@ -23,8 +23,8 @@ const ChatItem: React.FC<IChatItemProps> = ({ chat }) => {
           <i style={{ backgroundImage: `url(${chat.profile})` }} />
         </div>
         <div className={styles.message}>
-          <h3 className={styles.username}>{chat.username}</h3>
-          <h4 className={styles.recentMessage}>{mostRecentMessage.message}</h4>
+          <strong className={styles.username}>{chat.username}</strong>
+          <p className={styles.recentMessage}>{mostRecentMessage.message}</p>
         </div>
         <div className={styles.receive}>
           <span className={styles.time}>

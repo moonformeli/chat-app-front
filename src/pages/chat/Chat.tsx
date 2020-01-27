@@ -1,5 +1,6 @@
+import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 
 import ChatBody from '../../components/Chat/ChatBody';
 import Navigation from '../../components/Navigation/Navigation';
@@ -7,11 +8,27 @@ import UserController from '../../controllers/user/UserController';
 import { IUser } from '../../models/user/interfaces/IUser';
 import UserQueryBuilder from '../../models/user/UserQueryBuilder';
 import ChatStore, { ChatStoreCtx } from '../../stores/chat/ChatStore';
+import WebSocketStore, {
+  WebSocketStoreCtx
+} from '../../stores/socket/WebSocketStore';
 
 const Chat: React.FC = () => {
-  const chatStore = useRef(new ChatStore()).current;
-  const userBuilder = new UserQueryBuilder('/list');
-  const userController = new UserController(userBuilder);
+  const userController = new UserController(new UserQueryBuilder('/list'));
+  const chatStore = useContext<ChatStore>(ChatStoreCtx);
+  const socketStore = useContext<WebSocketStore>(WebSocketStoreCtx);
+
+  const getMessage = (msg: MessageEvent) => {
+    const { data } = msg;
+    const message = JSON.parse(data);
+
+    const user = chatStore.chatList.find(item => item.username === '구현모');
+
+    if (!user) {
+      return;
+    }
+
+    user.messages.push(message);
+  };
 
   const getChats = async () => {
     const res = await userController.getAllChats<IUser[]>();
@@ -29,13 +46,14 @@ const Chat: React.FC = () => {
 
   useEffect(() => {
     getChats();
+    socketStore.beforeOnMessage = getMessage;
   }, []);
 
   return (
-    <ChatStoreCtx.Provider value={chatStore}>
+    <>
       <Navigation title={'채팅'} />
       <ChatBody />
-    </ChatStoreCtx.Provider>
+    </>
   );
 };
 

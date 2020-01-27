@@ -18,6 +18,11 @@ export default class WebSocketStore {
   onMessage(msg: MessageEvent) {
     this.beforeOnMessage?.(msg);
   }
+
+  @action.bound
+  onSend(msg: string) {
+    // this.ws.send(msg);
+  }
 }
 
 export const WebSocketStoreCtx = createContext<WebSocketStore>(null!);

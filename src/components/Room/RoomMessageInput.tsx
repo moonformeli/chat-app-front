@@ -13,6 +13,8 @@ const RoomMessageInput: React.FC<IRoomMessageInputProps> = () => {
     setMessage(value);
   };
 
+  const onSendMessage = () => {};
+
   return (
     <div className={styles.container}>
       <input
@@ -21,7 +23,7 @@ const RoomMessageInput: React.FC<IRoomMessageInputProps> = () => {
         value={message}
         onChange={onChangeMessage}
       />
-      <div className={styles.imgContainer}>
+      <div className={styles.imgContainer} onClick={onSendMessage}>
         <img src={img} className={styles.img} />
       </div>
     </div>
